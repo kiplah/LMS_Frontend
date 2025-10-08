@@ -68,7 +68,7 @@ export const useAuthStore = create<AuthState>((set) => ({
         set({isVerifyingEmail:true});
         try {
             console.log(code)
-            const response = await axiosInstance.post('/verify-email',code);
+            const response = await axiosInstance.post("/verify-email", { otp: code });
             console.log(response.data);
             
             window.location.href="/";
