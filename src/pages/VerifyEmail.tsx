@@ -14,7 +14,7 @@ interface HandleChangeEvent {
 const VerifyEmail = () => {
 
     // Extracting the authUser From Zustand store 
-    const { authUser, verifyEmail, isVerifyingEmail } = useAuthStore() as { authUser: { user: { _id: string, email: string, firstName: string, lastName: string, biography: string } } | null, verifyEmail: (code: object) => Promise<void>, isVerifyingEmail: boolean }
+    const { authUser, verifyEmail, isVerifyingEmail } = useAuthStore() as { authUser: { user: { _id: string, email: string, firstName: string, lastName: string, biography: string } } | null, verifyEmail: (code: string) => Promise<void>, isVerifyingEmail: boolean }
 
     // useState for the Otp Input
     // Defaulting the input to take 4 Values
@@ -91,7 +91,7 @@ const VerifyEmail = () => {
     function handleSubmitVerification (){
         const token = otp.join("");
         if(token.length !== 6 ) return toast.error("Token must be 6 numbers");
-        verifyEmail({code:token})
+        verifyEmail(token)
     }
 
 

@@ -16,7 +16,7 @@ interface AuthState {
     editingProfile:boolean
     editProfile:(userId:string,formData:object ) => Promise<void>
     userProfileData:null | string 
-    verifyEmail:(code:object)=>Promise<void>
+    verifyEmail:(code:string)=>Promise<void>
 }
 
 
@@ -64,26 +64,22 @@ export const useAuthStore = create<AuthState>((set) => ({
         }
     },
 
-    verifyEmail:async(code:object)=> {
-        set({isVerifyingEmail:true});
-        try {
-            console.log(code)
-            const response = await axiosInstance.post("/verify-email", { otp: code });
-            console.log(response.data);
-            
-            window.location.href="/";
-            set({isVerifyingEmail:false});
-            
-        } catch (error) {
-            if (error instanceof Error) {
-                toast.error((error as any).response.data.message);
-            }
-        }
-        finally{
-            set({isVerifyingEmail:false})
-        }
+    verifyEmail: async (code: string) => {
+  set({ isVerifyingEmail: true });
+  try {
+    const response = await axiosInstance.post("/verify-email", { otp: code });
+    console.log(response.data);
+    toast.success("Email verified successfully!");
+    window.location.href = "/";
+  } catch (error) {
+    if (error instanceof Error) {
+      toast.error((error as any).response?.data?.message || "Verification failed");
+    }
+  } finally {
+    set({ isVerifyingEmail: false });
+  }
+},
 
-    },
 
 
     signIn: async (formData: object) => {
