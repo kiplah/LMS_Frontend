@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 import { FacebookIcon, TwitterIcon, InstagramIcon, GithubIcon, ArrowRight } from "lucide-react";
 import { motion } from 'framer-motion';
